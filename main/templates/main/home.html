@@ -1,0 +1,237 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<style type="text/css">
+
+  .carousel-item {
+    height:32rem;
+    background:#000000;
+    color:white;
+    position:relative;
+    transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+  }
+
+
+  .featurette-divider {
+    margin: 5rem;
+  }
+
+  .class-img-top{
+    width:100%;
+    height:250px;
+  }
+
+  .owl-carousel{
+    display:flex;
+  }
+
+  .container img[name="carouselContainerImage"] {
+    position: absolute;
+    object-fit:cover;
+    width: 100%;
+    top: 0;
+    left: 0;
+    min-height: 200px;
+    background:rgba(0,0,0,0.7);
+  }
+
+  .carousel-caption {
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: initial;
+  }
+
+  @media(max-width:768px){
+  .carousel-inner{
+      height:auto
+    }
+  }
+  
+
+</style>
+
+{% if request.user.is_authenticated %}
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top:-25px;">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+  </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="container">
+          <img src="/media/kyn/carousel_images/number1.jpg" name="carouselContainerImage" class="testi-overly d-block w-100">
+          <div class="carousel-caption">
+            <h1>Welcome To Kyn!</h1>
+            <p style="font-size:18px;font-weight:italic;">A platform where we work towards fulfilling the potential of neighbourhoods. <br>Continue to get to know your neighbourhood through the events below!</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item carousel-item-next">
+        <div class="container" >
+          <img src="/media/kyn/carousel_images/number2.jpg" name="carouselContainerImage" class="testi-overly d-block w-100">
+          <div class="carousel-caption">
+            <h1>Spotlight Event</h1>
+            <p>Check out more events by clicking the button below!</p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'eventList' %}">Explore more events</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item carousel-item-next">
+        <div class="container">
+          <img src="/media/kyn/carousel_images/3.jpg" name="carouselContainerImage" class="testi-overly d-block w-100">
+          <div class="carousel-caption text-end">
+            <h1>Spotlight Event</h1>
+            <p>Check out more events by clicking the button below!</p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'eventList' %}">Explore more events</a></p>
+          </div>
+        </div>
+      </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="container-fluid my-5">
+    <h4 class="text-center text-uppercase fw-bold mb-3">Events happening in your neighbourhood</h4>
+    <h4 class="d-flex justify-content-center mb-3">{{user.userprofile.neighbourhood}}</h4>
+    {% if neighbourhoodEvents.count == 0 %}
+        <h1>There are currently no open events in your area!</h1>
+        <h3>Why not start one now <a href="{% url 'createEvent' %}">here</a></h3>
+    {% endif %}
+    <div class="row mt-5">
+      <div class="owl-carousel owl-theme" style="margin-top:-35px">
+        {% for event in neighbourhoodEvents %}
+          <div class="item mb-4">
+            <div class="card border-0 shadow">
+              <img src="{{event.event_image.url}}" alt="image" class="class-img-top">
+              <div class="card-body">
+                <p style="font-weight:bold; font-size:18px">{{ event.name }}</p>
+                <p>{{ event.description }}</p>
+                <a class="btn btn-primary" href="{% url 'viewEvent' id=event.id %}" role="button">Find out more!</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>  
+    </div>
+</div>
+
+<hr class="featurette-divider">
+
+<div class="container-fluid my-5">
+  <h4 class="text-center text-uppercase fw-bold mb-3">Events happening nationwide</h4>
+  <div class="row mt-5 mb-3">
+    <div class="owl-carousel owl-theme">
+      {% if events.length == 0 %}
+      <h1>There are currently no open events.</h1>
+      <h3>Why not start one now <a href="{% url 'createEvent' %}">here</a></h3>
+      {% else %}
+      {% for event in events %}
+        <div class="item mb-4">
+          <div class="card border-0 shadow">
+            <img src="{{event.event_image.url}}" alt="image" class="class-img-top">
+            <div class="card-body">
+              <p style="font-weight:bold; font-size:18px">{{ event.name }}</p>
+              <p style="font-weight:bold;">{{ event.neighbourhood }}</p>
+              <p>{{ event.description }}</p>
+              <a class="btn btn-primary" href="{% url 'viewEvent' id=event.id %}" role="button">Find out more!</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      {% endif %}
+    </div>  
+  </div>
+</div>
+
+<hr class="featurette-divider">
+
+  <!-- Portfolio Section-->
+    <div class="container">
+        <!-- Portfolio Section Heading-->
+        <h4 class="text-center text-uppercase mb-0">Explore by Categories</h4>
+        <br></br>
+        <!-- Portfolio Grid Items-->
+        <div class="row justify-content-center">
+            <!-- Portfolio Item 1-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <a href="/eventlist/?name__icontains=&category=COMMUNITY&neighbourhood="><img class="img-fluid" src="{% static 'theme/assets/img/portfolio/cabin.png' %}" alt="..." /></a>
+                </div>
+            </div>
+            <!-- Portfolio Item 2-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <a href="/eventlist/?name__icontains=&category=FOOD&neighbourhood="><img class="img-fluid" src="{% static 'theme/assets/img/portfolio/cake.png' %}" alt="..." /></a>
+                </div>
+            </div>
+            <!-- Portfolio Item 3-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <a href="/eventlist/?name__icontains=&category=FESTIVAL&neighbourhood="><img class="img-fluid" src="{% static 'theme/assets/img/portfolio/circus.png' %}" alt="..." /></a>
+                </div>
+            </div>
+
+
+{% else %}
+  <div class="cover-container d-flex w-50 p-3 mx-auto flex-column text-center" style="margin-top:150px">
+    <main class="px-3">
+      <h1>Welcome to Kyn</h1>
+      <p class="lead" style="padding-top:10px;padding-bottom:10px;">A platform where you can begin to be connected with your neighbourhood</p>
+      <p class="lead">
+        <a href="{% url 'aboutus' %}" class="btn btn-lg btn-secondary fw-bold ">Learn more</a>
+      </p>
+    </main>
+  </div>
+
+{% endif %}
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    center:true,
+    stagePadding:50,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:3
+        }
+    }
+    })
+  </script>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+
+<style type="text/css">
+
+.card-head-title {
+  font-size:22px;
+}
+.card-title {
+  padding-top:30px;
+  font-size:19px;
+}
+.card-text {
+  font-size:18px
+}
+
+</style>
+
+<div class="container">
+    <div class="row">
+      <div class="page1_block">
+        <div class="grid_6">
+          <img src='{{event.event_image.url}}' style="float:left;padding-top:25px;width:950px;height:580px;" alt="">
+        </div>
+        <div class="card" style="margin-top:25px;max-width:300px;height:555px;background-color:#7FB97B">
+            <div class="card-body">
+              <h6 class="card-head-title">{{event.name}}</h5>
+              <br>
+              <h6 class="card-title" style="padding-top:-15px">Organised By</h5>
+              <p class="card-text">{{event.created_by}}</p>
+              <h6 class="card-title">Date & Time</h5>
+              <p class="card-text">{{event.date}}, {{event.start_time}} - {{event.end_time}}</p>
+              <h6 class="card-title">Location</h5>
+                <p class="card-text">{{event.location}}</p>
+              <h6 class="card-title">Neighbourhood</h5>
+              <p class="card-text">{{event.neighbourhood}}</p>
+
+          
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="container" style="margin-top:5px;margin-left:-15px;padding-right:30px;">
+    <div class="card">
+      <div class="card-header">
+        Further Information
+      </div>
+      <div class="card-body">
+        <h5 class="card-title" style="padding-top:-30px;">Description of the Event</h5>
+        <p class="card-text">{{event.description}}</p>
+        <form method="post" action="{% url 'participate' id=event.id %}"> 
+          {% csrf_token %}
+          <button class="btn btn-block btn-dark" type="submit" style="align-items:center" onclick="return confirm('Would you like to sign up for {{event.name}}?')">Sign Up</button>
+        <form>
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock %}

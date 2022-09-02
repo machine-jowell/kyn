@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container" style="padding-left:350px; padding-top:10px">
+	<div class="justify-content-center align-items-start" style="width:600px; height:500px;">
+
+		<div class="card profile-card m-2">
+		  <div class="card-body">
+            <div class="header">
+                <h6>Edit Profile</h6>    
+                <div>Manage and protect your account</div>
+            </div>   
+            <br>
+		  	<div>
+              <form class="form-signin" method="post" enctype="multipart/form-data">{% csrf_token %}
+                {{form|crispy}}
+                {{profile_form|crispy}}
+
+
+  
+                  <button class="btn btn-lg btn-primary btn-block" type="submit">Edit Profile</button>
+              </form>
+            </div>
+          </div>
+          
+      </div>
+  </div>
+{% endblock %}

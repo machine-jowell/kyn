@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+
+
+    .m_auto[name=changePassword] {
+        margin-top:25px;
+    }
+
+    .m_auto[name="updateDetails"] {
+        margin:10px;
+    }
+
+    .mt-4{
+        padding-left:5px;
+    }
+
+    .profile-info {
+        padding-left:5px;
+    }
+
+</style>
+
+<div class="container" style="padding-left:350px; padding-top:10px">
+	<div class="justify-content-center align-items-start" style="width:600px; height:500px;">
+
+		<div class="card profile-card m-2">
+		  <div class="card-body">
+            <div class="header">
+                <h5>My Profile</h5>    
+                <p>Manage and protect your account</p>
+            </div>   
+            <br>
+		  	<div>
+                <div class="content-section">
+                    <div class="media">
+                        <img class="rounded-circle account-img" src="{{user.userprofile.profile_image.url}}" style="width:100px;height:100px;">
+                        <div class="media-body">
+                            <br>
+                            <h6 class="account-heading" style="padding-left:15px">{{user.username}}</h5>
+                            <p class="text-secondary" style="padding-left:15px">{{user.email}}</p>
+                        </div>
+                    </div>
+                </div>
+                <label class="mt-4 mb-1 field-heading">Phone Number</label>    
+                <h6 class="profile-info">{{user.userprofile.contactNo}}</h6>
+                <label class="mt-4 mb-1 field-heading">Age</label>    
+                <h6 class="profile-info">{{user.userprofile.age}}</h6>
+                <label class="mt-4 mb-1 field-heading">Address</label>    
+                <h6 class="profile-info">{{user.userprofile.address}}</h6>
+                <label class="mt-4 mb-1 field-heading">Neighbourhood</label>    
+                <h6 class="profile-info">{{user.userprofile.neighbourhood}}</h6>
+                </form>
+
+                <br>
+				<a class="m-auto" name="changePassword" href="{% url 'changePassword' %}">Change Password</a>
+                <a class="m_auto" name="updateDetails" href="{% url 'editProfile' %}">Update Details</a>
+                <a class="m_auto" name="updateDetails" href="{% url 'profileEvents' %}">Update & Manage Events</a>
+		  	</div>
+		  </div>
+		</div>
+    </div>
+</div>
+{% endblock content%}

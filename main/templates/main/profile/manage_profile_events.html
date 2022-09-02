@@ -1,0 +1,115 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+
+    .mt-4{
+        padding-left:5px;
+    }
+
+    .profile-info {
+        padding-left:5px;
+    }
+
+</style>
+
+<div class="container" style="padding-left:350px; padding-top:10px;">
+	<div class="justify-content-center align-items-start" style="width:800px; height:500px;">
+
+		<div class="card profile-card m-2" style="position:block">
+		  <div class="card-body">
+            <div class="header">
+                <h5>My Events</h5>    
+                <p>View and manage your created & signed-up events</p>
+            </div>
+		  	<div>
+                <label class="mt-4 mb-1 field-heading" style="font-size:20px;font-weight:bold">Created Events</label>  
+                {% if created_events.count == 0 %}
+                    <p style="padding-left:10px;font-size:16px;font-style:italic">- You have not created any events yet -</p>
+                    <a style="padding-left:70px"href="{% url 'createEvent' %}">Start one right now!</a>
+                {% endif %}
+                <div class="row mt-5">
+                    <div class="owl-carousel owl-theme" style="margin-top:-35px">
+                      {% for event in created_events %}
+                        <div class="item mb-4">
+                          <div class="card border-0 shadow">
+                            <a href="{% url 'viewEvent' id=event.id %}" style="text-decoration:none;">
+                              <img src="{{event.event_image.url}}" alt="image" class="class-img-top">
+                            </a>
+                            <div class="card-body">
+                              <p style="font-weight:bold; font-size:18px">{{ event.name }}</p>
+                              <p style="font-size:15px">{{ event.date }}</p>
+                              <p style="font-size:15px">{{ event.start_time}} - {{ event.end_time}}</p>
+                              <div class="btn-group" role="group">
+                                <a class="btn-sm btn-primary" href="{% url 'editEvent' id=event.id %}" role="button">Edit</a>
+                                <form method="post" action="{% url 'removeEvent' id=event.id %}">
+                                  {% csrf_token %}
+                                  <button class="btn-sm btn-danger" type="submit" style="margin-left:10px"onclick="return confirm('Are you sure you want to delete {{event.name}}?')">Remove</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>  
+                  </div> 
+            
+                <label class="mt-4 mb-1 field-heading" style="font-size:20px;font-weight:bold;">Signed-Up Events</label>    
+                {% if signedUp_events.count == 0 %}
+                    <p style="padding-left:10px;font-size:16px;font-style:italic">- You have not signed up for any events yet -</p>
+                    <a style="padding-left:35px"href="{% url 'eventList' %}">Discover & Sign up for one right now!</a>
+                {% endif %}
+                <div class="row mt-5">
+                    <div class="owl-carousel owl-theme" style="margin-top:-35px">
+                      {% for event in signedUp_events %}
+                        <div class="item mb-4">
+                          <div class="card border-0 shadow">
+                            <a href="{% url 'viewEvent' id=event.id %}" style="text-decoration:none;">
+                              <img src="{{event.event_image.url}}" alt="image" class="class-img-top">
+                            </a>
+                            <div class="card-body">
+                              <p style="font-size:18px;font-weight:bold;">{{ event.name }}</p>
+                              <p style="font-size:15px">{{ event.date }}</p>
+                              <p style="font-size:15px">{{ event.start_time}} - {{ event.end_time}}</p>
+                              <form method="post" action="{% url 'removeParticipation' id=event.id %}">
+                                {% csrf_token %}
+                                <button class="btn-sm btn-danger" type="submit" style="display:inline-block; vertical-align:top" onclick="return confirm('Are you sure you want to delete {{event.name}}?')">Remove</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>  
+                  </div> 
+
+		  	</div>
+		  </div>
+		</div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    $('.owl-carousel').owlCarousel({
+    loop:false,
+    margin:10,
+    stagePadding:50,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:3
+        }
+    }
+    })
+  </script>
+{% endblock content%}

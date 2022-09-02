@@ -1,0 +1,93 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<style type="text/css">
+
+.container-hero {
+    background-color:#008080;
+    height:400px;
+}
+
+.container-faq {
+    height:800px;
+}
+
+
+</style>
+<section>
+    <div class="container-fluid container-hero d-flex mx-auto flex-column justify-content-center text-center">
+        <div class="row" style="margin:0 auto; width:50%;">
+            <h1 style="color:white;">FAQ</h1>
+            <p style="color:lightblue; padding-top:20px;">A collection of frequently asked questions, for new homeowners or if you're just looking for specific housing / contact information</p>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container container-faq" style="width:65%">
+        <div class="accordion accordion-borderless" style="padding-top:50px;">
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    What is Kyn?
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p>Kyn is a web application that focuses on connecting people in their neighbourhoods together!</p>
+                  <a href="{% url 'aboutus' %}"><p>Learn more about us here!</p></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed align-items-center text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  One of the facilities (e.g. corridors, void decks, lifts, public lighting) in my estate is faulty, how do I proceed?
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>Town council provides estate management and flat maintenance services, contact your town council for more details!</p>
+
+                    <p>Find out your Town Council's contact through the link below.</p>
+                    <a href="https://mylegacy.life.gov.sg/find-a-service/find-town-council/">Town Council's Contacts</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  I just moved in, what are the facilities and hotspots around my area?
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p>It's exciting that you just moved in! Take your time to explore your town through the link below. The link contains all the neighbourhoods in Singapore for you to browse through.</p>
+                  <a href="https://www.hdb.gov.sg/residential/where2shop/explore">Explore your town here!</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed align-items-center text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Where can I contact HDB / Town Council?
+                  </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                      <p>Town council provides estate management and flat maintenance services, contact your town council for more details!</p>
+  
+                      <p>Find out your Town Council's contact through the link below.</p>
+                      <a href="https://mylegacy.life.gov.sg/find-a-service/find-town-council/">Town Council's Contacts</a>
+                  </div>
+                </div>
+            </div>
+
+          </div>
+    </div>
+    </section>
+{% endblock %}

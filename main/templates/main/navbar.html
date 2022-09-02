@@ -1,0 +1,59 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-light text-uppercase py-1" style="background-color:whitesmoke" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}" style="color:black">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-heart" viewBox="0 0 16 16" style="padding-bottom:5px;">
+                <path d="M8 6.982C9.664 5.309 13.825 8.236 8 12 2.175 8.236 6.336 5.309 8 6.982Z"/>
+                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.707L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.646a.5.5 0 0 0 .708-.707L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+            </svg>
+            Kyn
+        </a>
+        <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>   
+        {% if request.user.is_authenticated %}
+        <div class="navbar-collapse collapse" id="navbarResponsive">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item mx-0 mx-lg-1">
+                    <ul class="nav-item dropdown mr-auto">
+                        <a class="nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black">Events</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'eventList' %}">View all events</a>
+                        <a class="dropdown-item" href="{% url 'createEvent' %}">Create a new event</a>
+                        </div>
+                    </ul>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'faq' %}" style="color:black">FAQ</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'aboutus' %}" style="color:black">About Us</a></li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="navbar-collapse collapse" id="navbarResponsive">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'aboutus' %}" style="color:black">About Us</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'faq' %}" style="color:black">FAQ</a></li>
+            </ul>
+        </div>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+        <ul class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style="margin-top:13px"href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Hello, {{user.username}}!
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'profile' %}">View Profile</a>
+              <a class="dropdown-item" href="{% url 'profileEvents' %}">View & Manage Events</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+            </div>
+        </ul>
+        {% else %}
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'login' %}" style="color:black">Login</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'register' %}" style="color:black">Register</a></li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</nav>
